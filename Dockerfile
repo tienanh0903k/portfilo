@@ -1,4 +1,4 @@
-FROM node:18 AS build
+FROM node:18-alpine
 
 # Đặt thư mục làm việc trong container
 WORKDIR /app
@@ -28,7 +28,7 @@ COPY --from=build /app /app
 RUN npm ci --only=production
 
 # Mở cổng mà ứng dụng Next.js sẽ chạy
-EXPOSE 3000
+EXPOSE 5000
 
 # Chạy ứng dụng Next.js
 CMD ["npm", "start"]
