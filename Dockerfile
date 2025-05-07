@@ -15,8 +15,8 @@ COPY . .
 # Build app (Next.js sẽ tạo .next folder)
 RUN npm run build
 
-# Expose port 3000
-EXPOSE 3000
+# Expose port 5000
+EXPOSE 5000
 
 # Start the app
 CMD ["npm", "start"]
