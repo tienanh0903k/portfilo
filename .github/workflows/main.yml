@@ -26,7 +26,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}  # The login password (stored in GitHub Secrets)
         port: 22                            # Default SSH port
         script: |                           # Commands to run once SSH is successful
-          cd /services/portfilo  # Navigate to the folder containing the Dockerfile
+          cd /services/portfilo/portfilo  # Navigate to the folder containing the Dockerfile
           
           git fetch origin                    # Fetch updates from the repository
           git checkout production             # Switch to the `production` branch
