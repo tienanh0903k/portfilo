@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Nguyen Tien Anh",
-  description: "met vcl",
+  description: "met vcl lan cuoi dcm",
 };
 
 export default function RootLayout({
