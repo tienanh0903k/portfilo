@@ -6,11 +6,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import Link from "next/link";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 export default function Home() {
+
+  const profileSectionRef = useRef<HTMLElement | null>(null);
+  const skillsSectionRef = useRef<HTMLElement | null>(null);
+  const experienceSectionRef = useRef<HTMLElement | null>(null);
+  const contactRef = useRef<HTMLElement | null>(null);
+
+  const [scrollTo, setScrollTo] = useState<string | null>(null);
+
+
+
+  useEffect(() => {
+    if (scrollTo === 'profile') scrollToSection(profileSectionRef);
+    if (scrollTo === 'skills') scrollToSection(skillsSectionRef);
+    if (scrollTo === 'experience') scrollToSection(experienceSectionRef);
+    if (scrollTo === 'contact') scrollToSection(contactRef);
+
+    setScrollTo(null);
+  }, [scrollTo]);
+
+  const scrollToSection = (sectionRef: RefObject<HTMLElement | null>) => {
+    if (typeof window !== 'undefined' && sectionRef.current) {
+      window.scrollTo({
+        top: sectionRef.current.offsetTop,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+ 
+
   return (
     <div className="flex min-h-screen bg-[#0a101f] justify-center hide-scrollbar">
       <div className="flex flex-col md:flex-row w-4/5">
@@ -20,7 +48,9 @@ export default function Home() {
             <span className="text-white font-bold">NTA</span>
           </div>
           <nav className="flex flex-row md:flex-col items-center gap-2 md:gap-6">
-            <button className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
+            <button
+                onClick={() => setScrollTo('profile')}
+                className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -37,7 +67,9 @@ export default function Home() {
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
             </button>
-            <button className="w-8 md:w-10 h-8 md:h-10 rounded-full hover:bg-[#1f2937] flex items-center justify-center text-gray-400 hover:text-white">
+            <button 
+                onClick={() => setScrollTo('skills')}
+                className="w-8 md:w-10 h-8 md:h-10 rounded-full hover:bg-[#1f2937] flex items-center justify-center text-gray-400 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -54,7 +86,9 @@ export default function Home() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </button>
-            <button className="w-8 md:w-10 h-8 md:h-10 rounded-full hover:bg-[#1f2937] flex items-center justify-center text-gray-400 hover:text-white">
+            <button 
+                onClick={() => setScrollTo('experience')}
+                className="w-8 md:w-10 h-8 md:h-10 rounded-full hover:bg-[#1f2937] flex items-center justify-center text-gray-400 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -87,7 +121,9 @@ export default function Home() {
                 <path d="M20 20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2.5l2-3h7l2 3H18a2 2 0 0 1 2 2Z" />
               </svg>
             </button>
-            <button className="w-8 md:w-10 h-8 md:h-10 rounded-full hover:bg-[#1f2937] flex items-center justify-center text-gray-400 hover:text-white">
+            <button 
+              onClick={() => setScrollTo('contact')}                
+              className="w-8 md:w-10 h-8 md:h-10 rounded-full hover:bg-[#1f2937] flex items-center justify-center text-gray-400 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -249,7 +285,10 @@ export default function Home() {
                 </p>
 
                 {/* Skills Section */}
-                <section className="mb-10">
+                <section 
+                    className="mb-10"
+                    ref={skillsSectionRef}    
+                >
                   <h2 className="text-xl font-bold mb-6">My Skills</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="bg-[#1a2234] p-4 rounded-lg">
@@ -362,7 +401,9 @@ export default function Home() {
                 </section>
 
                 {/* Experience Section */}
-                <section className="mb-10">
+                <section className="mb-10"
+                  ref={experienceSectionRef}
+                >
                   <h2 className="text-xl font-bold mb-6">My Experience</h2>
                   <div className="space-y-6">
                     {/* <div className="relative pl-8 pb-6 border-l border-[#243050]">
@@ -453,7 +494,9 @@ export default function Home() {
                 </section>
 
                 {/* Contact Section */}
-                <section>
+                <section
+                  ref={contactRef}
+                >
                   <h2 className="text-xl font-bold mb-6">Get In Touch</h2>
                   <p className="text-gray-300 mb-6">
                     Have a project in mind or want to discuss a potential collaboration? Feel free to reach out!

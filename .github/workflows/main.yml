@@ -1,0 +1,44 @@
+# This is the name of the workflow, it will appear on the GitHub Actions interface
+name: Next Deployment
+
+# Set up the trigger for the workflow. 
+# This allows the workflow to run when changes are pushed to the `production` branch
+on:
+  push:
+    branches:
+      - production
+
+# Define jobs in the workflow. A job will run on a separate runner.
+jobs:
+  deploy:
+    # The runner used is Ubuntu-latest (a virtual machine running the latest version of Ubuntu)
+    runs-on: ubuntu-latest
+
+    # The steps to perform the deployment will be listed in the `steps` section
+    steps:
+    
+    # The first step is to execute the SSH action to connect to the VPS
+    - name: Deploy using ssh
+      uses: nta/ssh-action@master  # This action helps to SSH into the VPS
+      with:
+        host: ${{ secrets.HOST }}          # The VPS IP address (stored in GitHub Secrets)
+        username: ${{ secrets.USERNAME }}  # The login username for VPS (stored in GitHub Secrets)
+        password: ${{ secrets.PASSWORD }}  # The login password (stored in GitHub Secrets)
+        port: 22                            # Default SSH port
+        script: |                           # Commands to run once SSH is successful
+          cd /root/services/deploy-next-docker  # Navigate to the folder containing the Dockerfile
+          
+          git fetch origin                    # Fetch updates from the repository
+          git checkout production             # Switch to the `production` branch
+          git pull                            # Pull the latest changes from the `production` branch
+          
+          # Build the Docker image from the Dockerfile in the current directory
+          docker build -t portfilo .    
+          
+          # Stop the container if it is running
+          docker stop portfilo-container || true  
+          
+          # Remove the old container
+          docker rm portfilo-container || true  
+          
+          docker run -d --name portfilo-container -p 5000:3000 portfilo
