@@ -11,11 +11,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    allowedDevOrigins: [
-      'https://3000-idx-my-profilo-1746550228688.cluster-6dx7corvpngoivimwvvljgokdw.cloudworkstations.dev', // Thêm domain của bạn vào đây
-    ],
-  },
 };
 
 export default nextConfig;
