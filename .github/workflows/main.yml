@@ -19,7 +19,7 @@ jobs:
     
     # The first step is to execute the SSH action to connect to the VPS
     - name: Deploy using ssh
-      uses:  appleboy/ssh-action@v0.1 # This action helps to SSH into the VPS
+      uses:  appleboy/ssh-action@master # This action helps to SSH into the VPS
       with:
         host: ${{ secrets.HOST }}          # The VPS IP address (stored in GitHub Secrets)
         username: ${{ secrets.USERNAME }}  # The login username for VPS (stored in GitHub Secrets)
