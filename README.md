@@ -36,4 +36,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-Final [http://localhost:3000]((http://tienanh.vnmylove.top)) with your browser to see the result. 
+Final [[http://localhost:3000](http://tienanh.vnmylove.top)]((http://tienanh.vnmylove.top)) with your browser to see the result. 
